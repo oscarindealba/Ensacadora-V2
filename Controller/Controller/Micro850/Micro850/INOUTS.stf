@@ -1,0 +1,25 @@
+PROGRAM INOUTS
+ 
+ 
+// ASIGNACION DE SALIDAS
+ 
+ _IO_EM_DO_01:= MotorBanda;
+ _IO_EM_DO_00:= MotorAlimentador;
+ _IO_EM_DO_02:= Valvula;
+ _IO_EM_DO_03:= PistonMordaza;
+ _IO_EM_DO_04:= botador;
+ _IO_EM_DO_05:= prelimpia;
+ _IO_EM_DO_06:= corto;
+ 
+ 
+ // ASIGNACION ENTRADAS
+OLALIMENTADOR:=_IO_EM_DI_00;
+OLBANDA:=_IO_EM_DI_01;
+inicioCiclo:=_IO_EM_DI_02;
+ 
+ 
+
+
+
+
+END_PROGRAM

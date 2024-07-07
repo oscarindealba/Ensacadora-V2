@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectElements>
+  <AcfElementGuid Guid="17beb9d0-e516-48c5-97b0-64f5caf83728">
+    <File>INOUTS.AcfMlge</File>
+  </AcfElementGuid>
+  <AcfElementGuid Guid="5f42db6f-3a21-40fd-a58d-abe671a97326">
+    <File>TimeOut.AcfMlge</File>
+  </AcfElementGuid>
+  <AcfElementGuid Guid="75ee80ab-d22d-4e1d-832a-be31f9a53882">
+    <File>Reiniciar.AcfMlge</File>
+  </AcfElementGuid>
+  <AcfElementGuid Guid="aae87ba4-77e3-4793-85c7-4a259df0dfc2">
+    <File>RA_ASCII_INPUT_TO_STRING.acfmlge</File>
+  </AcfElementGuid>
+  <AcfElementGuid Guid="b37ee456-3af7-4b6d-88de-032b67c1103b">
+    <File>RS232.AcfMlge</File>
+  </AcfElementGuid>
+  <AcfElementGuid Guid="ffcb35f4-7a23-404b-95c0-e853c2ac8319">
+    <File>Principal.AcfMlge</File>
+  </AcfElementGuid>
+</ProjectElements>

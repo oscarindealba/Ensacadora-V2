@@ -1,0 +1,165 @@
+PROGRAM Principal
+
+ 
+//---------------------------------
+ 
+TON_1(PistonMordaza,T#1500ms);
+tiempobotador(activabotador and NOT tiempobotador.q,t#200ms,t#600ms);
+esperamicro(L,t#1s);
+microSwitch(inicioCiclo);
+delayAlimentador(cntlAlimentador,T#500ms);
+watchDOG(B AND NOT D,T#2000ms);
+
+
+
+//------------SECUENCIA A ESTABLECER TARA----------------
+IF microSwitch.Q AND NOT A AND Llenar THEN
+	A:=TRUE;
+	tarainicio:=0.0;
+	
+END_IF;
+
+
+IF A AND estabilidad  THEN
+	tarainicio:= pesoBasculaFormat;
+	A:=FALSE;
+	B:=TRUE;
+	PistonMordaza:= TRUE;
+	Valvula:= TRUE;
+	corto:= TRUE;
+	cntlAlimentador:= TRUE;
+END_IF;
+
+PesoDosificado:= pesoBasculaFormat- tarainicio;
+//-----------  FIN DE SECUENCIA TARA -----------------
+
+// ----------- FUNCION DE WATCHDOG  ------------------
+
+
+//------------- FIN DE FUNCION DE WATCHDOG -----------
+
+//------------- CONTROL DE ALIMENTADOR CON BASE A PUNTO DE DOSIFICADO RAPIDO ------------  
+
+IF PesoDosificado>= (PuntoDosificadoRapido * setPoint/100.0 ) AND B THEN
+
+	B:=FALSE;
+	E:= TRUE;
+	
+	corto:=FALSE;
+END_IF;
+
+//-------------- FIN DE CONTROL DE ALIMENTADOR -------------------------------------------
+
+//-------------- CONTROL DE VALVULA --------------------------------------------
+IF E THEN 
+	E:= FALSE;
+	F:=TRUE;
+	prelimpia:= TRUE;
+END_IF;
+
+IF PesoDosificado >= (PuntoCorte * setPoint/100.0 ) AND F THEN
+	F:= FALSE;
+	G:= TRUE;
+	Valvula:=FALSE;
+	cntlAlimentador:=FALSE;
+END_IF;
+
+//-------------- FIN DE CONTROL DE VALVULA -------------------------------------
+
+//--------------- CONTROL DEL CORTE FINO PRELIMPIA -------------------------------------
+
+IF PesoDosificado<= (setPoint-2.0) AND G THEN		
+	prelimpia:= TRUE;
+END_IF;
+
+IF PesoDosificado>= (setPoint)  THEN		
+	prelimpia:= FALSE;
+	G:=FALSE;
+	H:=TRUE;
+END_IF;
+contadorflag(h);
+
+IF contadorflag.Q THEN
+	NumeroCostalesLlenos:=NumeroCostalesLlenos+1;
+	PesoTotal:=PesoTotal+PesoDosificado;
+END_IF;
+
+//---------------- FIN DEL CORTE FINO ---------------------------------------
+
+//----------------- TOTALIZADORES ------------------------------------------
+
+IF H  THEN 
+	H:= FALSE;
+	J:= TRUE;
+	PistonMordaza:= FALSE;
+	
+	
+END_IF;
+
+
+//----------------- FIN DE TOTALIZADORES -----------------------------------
+//----------------- CONTROL DE BOTADOR --------------------------------
+
+IF J THEN
+	J:= FALSE;
+	K:=TRUE;
+	activabotador:=TRUE;
+END_IF;
+	
+//----------------- FIN DE CONTROL DE BOTADOR -------------------------
+//------------------ RETARDO PARA NUEVO CICLO ---------------------------
+
+IF K AND botador THEN
+	L:= TRUE;
+	activabotador:=FALSE;
+	k:=FALSE;
+		
+END_IF;
+
+IF L AND NOT botador THEN
+	IF esperamicro.Q THEN
+		L:=FALSE;
+		A:=FALSE;
+		
+	END_IF;
+END_IF;
+//------------------ FIN RETARDO PARA NUEVO CICLO -----------------------
+
+// ----------------- SECUENCIA DE WATCHDOG-------------------------------
+IF C THEN
+
+	//A:= FALSE;
+	//PistonMordaza:= FALSE;
+	Valvula:= FALSE;
+	cntlAlimentador:= FALSE;
+	
+END_IF;
+//------------------ FIN DE SECUENCIA DE WATCH DOG --------------------
+//-------------------SECUENCA DE CALCELAR ----------------------------
+IF cancelar THEN
+	A:= FALSE;
+	B:= FALSE;
+	C:=FALSE;
+	D:=FALSE;
+	E:=FALSE;
+	F:=FALSE;
+	G:=FALSE;
+	H:=FALSE;
+	J:=FALSE;
+	K:=FALSE;
+	L:=FALSE;
+	PistonMordaza:= FALSE;
+	Valvula:= FALSE;
+	cntlAlimentador:= FALSE;
+	cancelar:=FALSE;
+	activabotador:=FALSE;
+	Llenar:=FALSE;
+END_IF;
+
+//------------------- FIN DE SECUENCIA DE CALCELAR ------------------
+
+MotorAlimentador:= Valvula AND delayAlimentador.Q;
+botador:=Llenar AND tiempobotador.Q;
+
+
+END_PROGRAM

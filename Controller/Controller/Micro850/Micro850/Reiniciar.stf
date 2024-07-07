@@ -1,0 +1,44 @@
+PROGRAM Reiniciar
+/* Variables de entrada
+  Setpoint: REAL;                // Setpoint de peso a dosificar
+  PuntoDosificadoRapido: REAL;    // Punto de dosificado rápido
+  InicioDosificado: BOOL;         // Switch de inicio de dosificado
+  BascualaEstable: BOOL;          // Bit de estabilidad de la bascula
+  
+  // Variables de salida
+  Prensa: BOOL;                   // Prensas que sostienen el costal
+  MotorDosificado: BOOL;          // Motor de dosificado
+  PistonDosificadoLento: BOOL;    // Pistón de dosificado lento
+  MotorAlimentador: BOOL;         // Motor alimentador
+  
+  // Variables internas
+  PesoTotal: REAL;                // Peso total acumulado
+  PesoDosificado: REAL;           // Peso dosificado actual
+  NumeroCostalesLlenos: INT;      // Número de costales llenados
+  
+  // Constantes
+  PorcentajeDosificadoLento: REAL := 0.3;  // Porcentaje para activar dosificado lento
+  PuntoCorte: REAL := 0.1;    
+  */
+  
+ 
+
+  IF Reinicia THEN
+    // Reinicia las variables
+    
+   
+    InicioDosificado := FALSE;
+    BascualaEstable := FALSE;
+    Prensa := FALSE;
+    MotorBanda := FALSE;
+    PistonDosificadoLento := FALSE;
+    MotorAlimentador := FALSE;
+	PesoTotal:=0.0;
+    PesoDosificado := 0.0;
+    NumeroCostalesLlenos := 0;
+	inicioCiclo:= False;
+  END_IF;
+
+
+
+END_PROGRAM

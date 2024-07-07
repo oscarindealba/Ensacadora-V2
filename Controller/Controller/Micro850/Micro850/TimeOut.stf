@@ -1,0 +1,27 @@
+PROGRAM TimeOut
+#info= QLD
+BOF
+
+
+(**)
+
+SOR  [0,1] (**) (**)  FB  [1,0] (*=*) (*1*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*anterior*) (**)  , (*i2:*)(*counterrr*) (**) ; (*o1:*)(**) (**) )  OTS  [4,0] (*resetCumunicacion*) (**)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,5] (**) (**)  FB  [1,0] (*<>*) (*2*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*anterior*) (**)  , (*i2:*)(*counterrr*) (**) ; (*o1:*)(**) (**) )  OTR  [4,0] (*resetCumunicacion*) (**)
+EOR [5,0]
+
+
+(**)
+
+SOR  [0,9] (**) (**)  FB  [1,0] (*1 gain*) (*3*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*counterrr*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*anterior*) (**) )
+EOR [4,0]
+EOF
+#end_info
+#info= ID_MAX
+NextId=3
+#end_info
+END_PROGRAM

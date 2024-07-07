@@ -1,0 +1,87 @@
+(****** QuickLD compiler *******************************)
+(****** Copyright Rockwell Automation Canada, Ltd ******)
+(****** ST *********************************************)
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,1
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: ARL *)
+ARL_1(NOT(ACL_1.Q), ADRESS) ;
+LOCALADR := ARL_1.Destination ;
+NUMC := ARL_1.NumChar ;
+ERRORSTATUS := ARL_1.Error ;
+ERRORID := ARL_1.ErrorID ;
+__EDTB1 := ARL_1.Q ;
+IF __EDTB1 THEN
+LONG := ANY_TO_DINT(NUMC) ;
+END_IF ;
+__MO_ANY_TO_DINT_1 := __EDTB1 ;
+(* FB call: RA_ASCII_INPUT_TO_STRING *)
+RA_ASCII_INPUT_TO_STRING_1(__EDTB1, LOCALADR) ;
+PESOBASCULAFORMAT := RA_ASCII_INPUT_TO_STRING_1.PesoBascula ;
+ESTABILIDAD := RA_ASCII_INPUT_TO_STRING_1.Estabilidad ;
+
+(*************** Code for the end of Rung **************)
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,7
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+(* FB call: CTU *)
+CTU_1(NOT(ARL_1.Q), RESTTT, 1000) ;
+COUNTERRR := CTU_1.CV ;
+RESTTT := CTU_1.Q ;
+
+(*************** Code for the end of Rung **************)
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,11
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB2 := ARL_1.Q ;
+__EDTB3 := __EDTB2 AND NOT(ACL_1.Q) ;
+__EDTB4 := __EDTB2 AND RESETCUMUNICACION ;
+(* FB call: ACL *)
+ACL_1((__EDTB3 OR __EDTB4), ACLVAR) ;
+ERROACL := ACL_1.Error ;
+ERRORIDACL := ACL_1.ErrorID ;
+
+(*************** Code for the end of Rung **************)
+
+
+(*************** Rung **********************************)
+(**)
+__STEPPRAGMA
+0,15
+__ENDSTEPPRAGMA
+(*Label :*)(**)
+__EDTB5 := RESETCUMUNICACION ;
+IF __EDTB5 THEN
+COUNTERRR := (  1) ;
+END_IF ;
+__MO_1GAIN_1 := __EDTB5 ;
+
+(*************** Code for the end of Rung **************)
+
+
+(*************** Code for the end of File **************)
+__GL __LG0000 ;
+
+
+
+(*************** Local Symbols table *******************)
+(* __EDTB1 *)
+(* __EDTB2 *)
+(* __EDTB3 *)
+(* __EDTB4 *)
+(* __EDTB5 *)
+

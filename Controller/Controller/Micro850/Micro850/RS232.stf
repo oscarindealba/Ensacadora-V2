@@ -1,0 +1,37 @@
+PROGRAM RS232
+#info= QLD
+BOF
+
+
+(**)
+
+SOR  [0,1] (**) (**)  XIO  [1,0] (*ACL_1.Q*) (**)  FB  [2,0] (*ARL*) (*ARL_1*) ( (*IN:*)(**) (**)  , (*ARLInput:*)(*adress*) (**) ; (*Q:*)(**) (**)  , (*Destination:*)(*localAdr*) (**)  , (*NumChar:*)(*numC*) (**)  , (*Error:*)(*errorStatus*) (**)  , (*ErrorID:*)(*errorID*) (**) )  FB  [5,0] (*ANY_TO_DINT*) (*21*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*numC*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*long*) (**) )  FB  [8,0] (*RA_ASCII_INPUT_TO_STRING*) (*RA_ASCII_INPUT_TO_STRING_1*) ( (*FBEN:*)(**) (**)  , (*Input:*)(*localAdr*) (**) ; (*FBENO:*)(**) (**)  , (*Output:*)(**) (**)  , (*PesoBascula:*)(*pesoBasculaFormat*) (**)  , (*Estabilidad:*)(*estabilidad*) (**) )
+EOR [11,0]
+
+
+(**)
+
+SOR  [0,7] (**) (**)  XIO  [1,0] (*ARL_1.Q*) (**)  FB  [2,0] (*CTU*) (*CTU_1*) ( (*CU:CU*)(**) (**)  , (*RESET:RESE*)(*resttt*) (**)  , (*PV:PV*)(*1000*) (**) ; (*Q:Q*)(**) (**)  , (*CV:CV*)(*counterrr*) (**) )  OTE  [5,0] (*resttt*) (**)
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,11] (**) (**)  XIC  [1,0] (*ARL_1.Q*) (**)  
+ BST  XIO  [2,0] (*ACL_1.Q*) (**)
+   NXB  XIC  [2,1] (*resetCumunicacion*) (**)
+ BND
+  FB  [3,0] (*ACL*) (*ACL_1*) ( (*IN:*)(**) (**)  , (*ACLInput:*)(*aclVAr*) (**) ; (*Q:*)(**) (**)  , (*Error:*)(*erroACL*) (**)  , (*ErrorID:*)(*errorIDACL*) (**) )
+EOR [6,0]
+
+
+(**)
+
+SOR  [0,15] (**) (**)  XIC  [1,0] (*resetCumunicacion*) (**)  FB  [2,0] (*1 gain*) (*23*) ( (*EN:EN*)(**) (**)  , (*i1:*)(*1*) (**) ; (*ENO:ENO*)(**) (**)  , (*o1:*)(*counterrr*) (**) )
+EOR [5,0]
+EOF
+#end_info
+#info= ID_MAX
+NextId=23
+#end_info
+END_PROGRAM

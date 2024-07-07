@@ -1,0 +1,68 @@
+FUNCTION_BLOCK RA_ASCII_INPUT_TO_STRING
+(*|---------------------------------------------|
+  | NAME OF THE UDFB : RA_ASCII_INPUT_TO_STRING	|
+  | CATEGORY : DATA CONVERSION					|
+  | AUTHOR : LEW JIA MIN						|
+  | EMAIL: jlew@ra.rockwell.com     			|
+  | VERSION/REVISION : 1.0.0					|
+  | DATE : 16 JUNE 2011							|
+  | CHANGE : CREATE NEW UDFB					|
+  |---------------------------------------------|*)
+(*
+FBENO := FBEN;
+IF FBEN THEN
+	Output := '';
+	FOR Index := 7 TO 10 BY 1 DO
+		CASE Input[Index] OF
+		49,50,51,52,53,54,55,56: k:=0;
+		ELSE
+		k:=128;
+		END_CASE;
+		k:=Input[Index]-k;
+		PesoString := REPLACE(Output, CHAR(ANY_TO_DINT(k)), 1, Index);
+	END_FOR;
+	
+END_IF;
+
+*)
+
+FBENO := FBEN;
+IF FBEN THEN
+	Output := '';
+	NbC:=0.0;
+	FOR Index := 7 TO 10 BY 1 DO
+		CASE Input[Index] OF
+			49: k:=1.0;
+			50: k:=2.0;
+			179: k:=3.0;
+			52: k:=4.0;
+			181: k:=5.0;
+			182: k:=6.0;
+			55: k:=7.0;
+			56: k:=8.0;
+			185: k:=9.0;
+			176: k:=0.0;			
+		ELSE
+			k:=0.0;
+		END_CASE;
+		CASE Index OF
+				10: NbC:= NbC + (k/100.0);
+				9: NbC:= NbC+ k/10.0;
+				8: NbC:= NbC+ k;
+				7: NbC:= NbC+ k*10.0;
+			ELSE
+				NbC:=0.0;
+		END_CASE;				
+	END_FOR;
+	 if Input[3].1 THEN
+	PesoBascula:=10.0*NbC*-1.0;
+	ELSE
+	PesoBascula:=10.0*NbC;
+	END_IF;
+	Estabilidad:= NOT Input[3].3;
+	
+END_IF;
+
+
+
+END_FUNCTION_BLOCK
